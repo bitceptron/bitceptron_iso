@@ -12,7 +12,7 @@ If you want to be part of this project, please do let us know by sending an emai
 
 As the first part, we have started with tychentropy. You can throw an n-sided dice where n >= 2 and make entropy for your BIP39 mnemonic. You can mix your physical entropy with RNGs from ring and rand, two leading RNGs in rust ecosystem. Tychentropy also performs statistical tests (those which need at least 128 bits) on your entropy to see if there is any divergence from a random distribution those test can detect (By no means exhaustive).
 
-You cana download executables for Mac, Windows and Ubuntu Linux from the [Releases page](https://github.com/bitceptron/bitceptron_iso/releases/tag/v0.0.0-alpha.1.).
+You can download executables for Mac, Windows and Ubuntu Linux from the [Releases page](https://github.com/bitceptron/bitceptron_iso/releases/tag/v0.0.0-alpha.1.).
 
 <img width="1268" alt="Screenshot 1403-07-14 at 09 42 33" src="https://github.com/user-attachments/assets/7463600c-54c0-4c5b-9a34-5b3efd5f6bae">
 
