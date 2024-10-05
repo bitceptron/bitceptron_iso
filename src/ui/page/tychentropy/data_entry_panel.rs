@@ -1,0 +1,95 @@
+use dioxus::prelude::*;
+use tychentropy::{domain::process::input::natural_datum::NaturalDatum, Tychentropy};
+
+use crate::ui::view_model::tychentropy_page::TychentropyPageViewModel;
+
+#[component]
+pub fn TychentropyPageDataEntryPanel() -> Element {
+    let range_and_target_entropy_bytes_accepted_in_ui =
+        use_context::<TychentropyPageViewModel>().range_and_target_entropy_bytes_accepted;
+    let mut datum_placeholder = use_signal(|| NaturalDatum::new(6, 1).unwrap());
+    let mut entry_is_valid = use_signal(|| false);
+    let bits_generated_percentage = (100.
+        * 1f64.min(
+            use_context::<Signal<Tychentropy>>()
+                .read()
+                .get_generated_entropy_bits()
+                .to_owned() as f64
+                / use_context::<Signal<Tychentropy>>()
+                    .read()
+                    .get_target_entropy_bits()
+                    .to_owned() as f64,
+        )) as u64;
+    let max_datum_value = *use_context::<Signal<Tychentropy>>().read().get_range() as i64;
+    let input_field_is_disabled = *use_context::<Signal<Tychentropy>>()
+        .read()
+        .get_is_entropy_ready()
+        || !range_and_target_entropy_bytes_accepted_in_ui
+            .read()
+            .to_owned();
+    let range = *use_context::<Signal<Tychentropy>>().read().get_range();
+    let add_datum_button_is_disabled = !*entry_is_valid.read()
+        || *use_context::<Signal<Tychentropy>>()
+            .read()
+            .get_is_entropy_ready()
+        || !range_and_target_entropy_bytes_accepted_in_ui
+            .read()
+            .to_owned();
+    rsx! {
+        div { class: "flex flex-row content-start justify-start items-start w-full mt-3",
+            div { class: "flex flex-col py-1 w-full items-start content-start justify-start",
+                div { class: "flex flex-row text-khaki items-center content-center justify-start w-full self-center",
+                    div { class: "flex flex-row items-center content-center px-3 mb-1",
+                        div { class: "in_page_title_text h-8 items-center justify-center content-center",
+                            "Enter random data:"
+                        }
+                        input {
+                            class: "h-8 w-44 bg-black text-second_color border-[1px] border-second_color rounded-tl-lg rounded-bl-lg text-center [&::-webkit-inner-spin-button]:appearance-none self-center focus:bg-yellow-800 focus:outline-none font-mono",
+                            r#type: "number",
+                            min: 1,
+                            max: max_datum_value,
+                            disabled: input_field_is_disabled,
+                            oninput: move |input| {
+                                match input.value().parse::<u64>() {
+                                    Ok(value) => {
+                                        match NaturalDatum::new(range, value) {
+                                            Ok(datum) => {
+                                                datum_placeholder.set(datum);
+                                                entry_is_valid.set(true);
+                                            }
+                                            Err(_) => entry_is_valid.set(false),
+                                        }
+                                    }
+                                    Err(_) => entry_is_valid.set(false),
+                                }
+                            },
+                        }
+                        button {
+                            class: "bg-button_color_enabled text-black hover:bg-button_color_hover disabled:bg-button_color_disabled disabled:text-slate-400 font-serif text-center p-1 transition rounded-tr-lg rounded-br-lg",
+                            r#type: "submit",
+                            disabled: add_datum_button_is_disabled,
+                            onclick: move |_| {
+                                let _ = use_context::<Signal<Tychentropy>>()
+                                    .write()
+                                    .add_natural_datum(datum_placeholder.read().to_owned());
+                            },
+                            "Add datum"
+                        }
+                    }
+
+                    div { class: "flex flex-row justify-center items-center p-3 h-14",
+                        div { class: "in_page_title_text items-center justify-center content-center h-14",
+                            "Entropy bits completed:"
+                        }
+                        div { class: "mb-1 h-14 w-10 bg-black text-second_color items-center justify-center content-center [&::-webkit-inner-spin-button]:appearance-none font-mono text-center",
+                            "{bits_generated_percentage}%"
+                        }
+                    }
+                }
+                div { class: "font-serif text-sm self-start justify-start text-slate-400 w-full px-3",
+                    "Enter numbers generated by your source of entropy, e.g. a dice. The entries must be between 1 and {range} inclusive."
+                }
+            }
+        }
+    }
+}

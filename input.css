@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .generic_button {
+        @apply bg-button_color_enabled text-black rounded-lg hover:bg-button_color_hover disabled:bg-button_color_disabled disabled:text-slate-400 font-serif text-center p-1 transition active:bg-button_color_action
+    }
+
+    .in_page_title_text {
+        @apply pr-3 font-serif mb-1 text-second_color
+    }
+
+    .statistical_tests_results_box {
+        @apply h-24 w-32 flex flex-col items-center
+    }
+
+    .statistical_test_results_title {
+        @apply font-serif mb-1 text-second_color self-center text-center h-12 w-32
+    }
+
+    .statistical_test_results_status {
+        @apply text-black text-center self-center font-serif w-full
+    }
+    
+}
