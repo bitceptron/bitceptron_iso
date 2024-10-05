@@ -6,6 +6,7 @@
 /.dioxus/
 .DS_Store
 /*/.DS_Store
+/assets/.DS_Store
 
 # this file will generate by tailwind:
 /assets/tailwind.css
