@@ -69,19 +69,20 @@ cargo install dioxus-cli@0.5.4
 2. Download this repository from github.
 3. Enter into the downloaded repository's root folder.
 4. Copy the contents of `Dioxus_windows.toml` into `Dioxus.toml`.
-5. Run the following command in the root of the project to start the tailwind CSS compiler:
+5. In `Cargo.toml` edit out the pre-release versioning in `[package]`, `[version]` section, e.g, edit `version = "0.0.0-alpha.1"` to `version = "0.0.0"`.
+6. Run the following command in the root of the project to start the tailwind CSS compiler:
 
 ```bash
 npx tailwindcss -i ./input.css -o ./assets/tailwind.css --watch
 ```
 
-6. To build bundled executables run the following command:
+7. To build bundled executables run the following command:
 
 ```bash
 dx bundle --release --platform desktop
 ```
 
-7. You can find the executables in the following path:
+8. You can find the executables in the following path:
 
 ```bash
 [repo root]/dist/bundle/
