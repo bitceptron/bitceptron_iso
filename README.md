@@ -6,7 +6,7 @@ We are using [Dioxus](https://github.com/DioxusLabs/dioxus) as our GUI.
 
 # Collaboration
 
-If you want to be part of this project, please do let us know by shooting an email to `bitceptron@gmail.com`.
+If you want to be part of this project, please do let us know by sending an email to [bitceptron@gmail.com](mailto:bitceptron@gmail.com).
 
 # Usage
 
