@@ -105,3 +105,17 @@ npx tailwindcss -i ./input.css -o ./assets/tailwind.css --watch
 ```bash
 dx serve --hot-reload --platform desktop
 ```
+
+# TODO:
+
+## Overall
+
+1. Automate CI/CD for Mac/Linux/Windows bundling.
+
+## Tychentropy
+
+1. QR output for mnemonics. Not to scan but engrave.
+2. Side channel protection.
+3. Going constant-time is any good?
+4. Select datum instead of entering via keyboard.
+5. Maybe an option for a complete diehard test on RNGs for the truly paranoids (rational beings).
